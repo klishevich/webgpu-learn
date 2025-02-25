@@ -78,7 +78,7 @@ async function main() {
         pass.end();
         console.log('end');
         const commandBuffer = encoder.finish();
-        device.queue.submit([commandBuffer]);
+        device.queue.submit([commandBuffer]); // rendering start here
     }
 
     render();
