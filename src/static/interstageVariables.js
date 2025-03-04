@@ -16,24 +16,70 @@ async function main() {
         format: presentationFormat,
     });
 
+    // SHADER CODE IS HERE
     const shaderSrc = `
-    @vertex fn vs(@builtin(vertex_index) vertexIndex : u32) -> @builtin(position) vec4f {
+    struct OurVertexShaderOutput {
+        @builtin(position) position: vec4f,
+        @location(0) @interpolate(perspective, center) color: vec4f,
+    };
+
+    @vertex fn vs(@builtin(vertex_index) vertexIndex : u32) -> OurVertexShaderOutput {
         let pos = array(
             vec2f( 0.0,  0.5),  // top center
             vec2f(-0.5, -0.5),  // bottom left
             vec2f( 0.5, -0.5)   // bottom right
         );
+        var color = array<vec4f, 3>(
+            vec4f(1, 0, 0, 1), // red
+            vec4f(0, 1, 0, 1), // green
+            vec4f(0, 0, 1, 1), // blue
+        );
     
-        return vec4f(pos[vertexIndex], 0.0, 1.0);
+        var vsOutput: OurVertexShaderOutput;
+        vsOutput.position = vec4f(pos[vertexIndex], 0.0, 1.0);
+        vsOutput.color = color[vertexIndex];
+        return vsOutput;
     }
     
-    @fragment fn fs() -> @location(0) vec4f {
-        return vec4f(1.0, 0.0, 0.0, 1.0);
+    @fragment fn fs(fsInput: OurVertexShaderOutput) -> @location(0) vec4f {
+        return fsInput.color;
     }
     `;
+    // @fragment fn fs(fsInput: OurVertexShaderOutput) -> @location(0) vec4f {
+    //     return fsInput.color;
+    // }
+    const shaderCheckerBoardSrc = `
+    struct OurVertexShaderOutput {
+        @builtin(position) position: vec4f
+    };
+
+    @vertex fn vs(@builtin(vertex_index) vertexIndex : u32) -> OurVertexShaderOutput {
+        let pos = array(
+            vec2f(-1,  1),  // top center
+            vec2f(-1, -1),  // bottom left
+            vec2f( 0, 0)   // bottom right
+        );
+    
+        var vsOutput: OurVertexShaderOutput;
+        vsOutput.position = vec4f(pos[vertexIndex], 0.0, 1.0);
+        return vsOutput;
+    }
+    
+    @fragment fn fs(fsInput: OurVertexShaderOutput) -> @location(0) vec4f {
+        let red = vec4f(1, 0, 0, 1);
+        let cyan = vec4f(0, 1, 1, 1);
+ 
+        let grid = vec2u(fsInput.position.xy) / 20;
+        let checker = (grid.x + grid.y) % 2 == 1;
+ 
+        return select(red, cyan, checker);
+    }
+    `;
+    // If condition is false return `a`, otherwise return `b`
+    // select = (a, b, condition) => condition ? b : a;
 
     const module = device.createShaderModule({
-        label: 'my_triangle_shader', // is used for error output
+        label: 'our hardcoded rgb triangle shaders', // is used for error output
         code: shaderSrc,
     });
 
@@ -77,14 +123,13 @@ async function main() {
         pass.setPipeline(pipeline);
         pass.draw(3); // call our vertex shader 3 times
         pass.end();
-        console.log('end');
         const commandBuffer = encoder.finish();
         device.queue.submit([commandBuffer]); // rendering start here
     }
 
     const observer = new ResizeObserver((entries) => {
         for (const entry of entries) {
-            console.log('resized');
+            console.log('interstageVariables.js');
             const canvas = entry.target;
             const width = entry.contentBoxSize[0].inlineSize;
             const height = entry.contentBoxSize[0].blockSize;
