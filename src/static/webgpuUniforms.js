@@ -78,7 +78,7 @@ async function main() {
     // create 2 buffers for the uniform values
     const staticUniformBufferSize =
         4 * 4 + // color is 4 32bit floats (4bytes each)
-        2 * 4 + // offset is 2 32bit floats (4bytes each)
+        2 * 4 + // offset is 2 32bit floats (4bytes each) which determines triangles position on the screen
         2 * 4; // padding
     const scaleUniformBufferSize = 2 * 4; // scale is 2 32bit floats (4bytes each)
 
@@ -100,7 +100,7 @@ async function main() {
         {
             const staticUniformValues = new Float32Array(staticUniformBufferSize  / 4);
             staticUniformValues.set([randFn(), randFn(), randFn(), 1], kColorOffset); // set the color
-            staticUniformValues.set([randFn(-0.9, 0.9), randFn(-0.9, 0.9)], kOffsetOffset); // set the offset
+            staticUniformValues.set([randFn(-0.9, 0.9), randFn(-0.8, 0.8)], kOffsetOffset); // set the offset
             // copy these values to the GPU
             device.queue.writeBuffer(staticUniformBuffer, 0, staticUniformValues);
         }
@@ -153,7 +153,7 @@ async function main() {
         pass.setPipeline(pipeline);
 
         // Set the uniform values in our JavaScript side Float32Array
-        const aspect = canvas.width / canvas.height;
+        const aspect = canvas.width / canvas.height; // resizing with fixed height keeps the triangles size
 
         for (const { scale, scaleUniformBuffer, scaleUniformValues, bindGroup } of objectInfos) {
             scaleUniformValues.set([scale / aspect, scale], kScaleOffset); // set the scale

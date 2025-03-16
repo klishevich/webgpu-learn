@@ -62,6 +62,18 @@ const f32c = f32a.map(v => `${v} doubled = ${v *2}`); // BAD!
 const f32d = Array.from(f32a).map(v => `${v} doubled = ${v *2}`); // Ok
 ```
 
-### WebGPU Uniforms
+### WebGPU Uniforms (global variables for your shader)
 
 https://webgpufundamentals.org/webgpu/lessons/webgpu-uniforms.html (March 06 done)
+
+### WebGPU Storage Buffers
+
+https://webgpufundamentals.org/webgpu/lessons/webgpu-storage-buffers.html (March 16 done)
+
+#### Differences between uniform buffers and storage buffers
+
+Depends on the use case
+
+1. Uniform buffers can be faster for their typical use-case. For example 3D game.
+2. Storage buffers (128MiB) are much larger than uniform buffers (64 KiB)
+3. Storage buffers can be read/write, uniform buffers are read-only.
