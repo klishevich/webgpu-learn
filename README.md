@@ -77,3 +77,9 @@ Depends on the use case
 1. Uniform buffers can be faster for their typical use-case. For example 3D game.
 2. Storage buffers (128MiB) are much larger than uniform buffers (64 KiB)
 3. Storage buffers can be read/write, uniform buffers are read-only.
+
+### WebGPU Vertex Buffers
+
+https://webgpufundamentals.org/webgpu/lessons/webgpu-vertex-buffers.html
+
+Continue here "Just for fun, let’s add another attribute for a per vertex color. First let’s change the shader"

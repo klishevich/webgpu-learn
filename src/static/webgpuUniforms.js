@@ -99,8 +99,8 @@ async function main() {
         // only set once
         {
             const staticUniformValues = new Float32Array(staticUniformBufferSize  / 4);
-            staticUniformValues.set([randFn(), randFn(), randFn(), 1], kColorOffset); // set the color
-            staticUniformValues.set([randFn(-0.9, 0.9), randFn(-0.8, 0.8)], kOffsetOffset); // set the offset
+            staticUniformValues.set([getRandomNumber(), getRandomNumber(), getRandomNumber(), 1], kColorOffset); // set the color
+            staticUniformValues.set([getRandomNumber(-0.9, 0.9), getRandomNumber(-0.8, 0.8)], kOffsetOffset); // set the offset
             // copy these values to the GPU
             device.queue.writeBuffer(staticUniformBuffer, 0, staticUniformValues);
         }
@@ -123,7 +123,7 @@ async function main() {
         });
 
         objectInfos.push({
-            scale: randFn(0.2, 0.5),
+            scale: getRandomNumber(0.2, 0.5),
             scaleUniformBuffer,
             scaleUniformValues,
             bindGroup,
