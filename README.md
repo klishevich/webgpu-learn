@@ -80,6 +80,15 @@ Depends on the use case
 
 ### WebGPU Vertex Buffers
 
-https://webgpufundamentals.org/webgpu/lessons/webgpu-vertex-buffers.html
+https://webgpufundamentals.org/webgpu/lessons/webgpu-vertex-buffers.html (March 23 done)
 
 Continue here "Just for fun, let’s add another attribute for a per vertex color. First let’s change the shader"
+
+#### Attributes in WGSL do not have to match attributes in JavaScript
+
+Attributes always have 4 values available in the shader. They default to 0, 0, 0, 1 so any values we don’t supply get these defaults.
+
+#### Using normalized values to save space
+
+#### Index buffers
+
