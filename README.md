@@ -92,3 +92,12 @@ Attributes always have 4 values available in the shader. They default to 0, 0, 0
 
 #### Index buffers
 
+### WebGPU Textures
+
+Textures most often represent a 2d image. A 2d image is just an array of color values so you might wonder, why do we need textures for 2d arrays? We could just use storage buffers as 2d arrays. What makes textures special is that they can be accessed by special hardware called sampler. A sample can read up to 16 different values in a texture and blend them together in a way that is useful for many common use cases.
+
+Once we've flipped the data, what used to be the top is now at the bottom and now the bottom left pixel of the original image is the first data in the texture and becomes what texture coordinate 0,0 refers to. This is why often texture coordinates are considered to go from 0 at the bottom to 1 at the top.
+
+#### minFilter
+
+Textures offer a solution to the flickering problem. It’s called mip-mapping. I think (but could be wrong) that “mipmap” stands for “multi-image-pyramid-map”.
