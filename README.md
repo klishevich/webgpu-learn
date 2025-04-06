@@ -101,3 +101,7 @@ Once we've flipped the data, what used to be the top is now at the bottom and no
 #### minFilter
 
 Textures offer a solution to the flickering problem. It’s called mip-mapping. I think (but could be wrong) that “mipmap” stands for “multi-image-pyramid-map”.
+
+### WebGPU Loading Images into Textures
+
+https://webgpufundamentals.org/webgpu/lessons/webgpu-importing-textures.html
