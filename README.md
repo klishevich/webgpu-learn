@@ -105,3 +105,9 @@ Textures offer a solution to the flickering problem. It’s called mip-mapping. 
 ### WebGPU Loading Images into Textures
 
 https://webgpufundamentals.org/webgpu/lessons/webgpu-importing-textures.html
+
+#### Generating mips on GPU
+
+#### Texture Atlas 
+
+A texture with multiple images in it.
